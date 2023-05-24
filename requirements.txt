@@ -1,0 +1,10 @@
+Django==4.2.1
+django-health-check==3.17
+django-http-referrer-policy==1.1.1
+django-split-settings==1.2
+django_stubs_ext==4.2
+djangorestframework==3.14
+geopy==2.3
+gunicorn==20.1.0
+psycopg2-binary==2.9.6
+python-decouple==3.8

@@ -5,10 +5,9 @@ from .models import Car
 
 class CarAdmin(admin.ModelAdmin):
     model = Car
-    date_hierarchy = "updated"
     ordering = ("-updated",)
-    list_display = ("__str__", "updated")
-    search_fields = ("__str__",)
+    list_display = ("__str__", "load_capacity", "updated")
+    search_fields = ("unique_number",)
 
 
 admin.site.register(Car, CarAdmin)

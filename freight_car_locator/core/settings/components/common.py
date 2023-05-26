@@ -176,6 +176,6 @@ CELERY_CACHE_BACKEND = "default"
 CELERY_BEAT_SCHEDULE = {
     "update_car_locations_scheduler": {
         "task": "apps.car.tasks.update_car_locations",
-        "schedule": crontab(minute="*"),
+        "schedule": crontab(minute="*/3"),
     },
 }

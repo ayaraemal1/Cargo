@@ -11,16 +11,16 @@ def prefill_cars(apps, schema_editor):
     Car = apps.get_model("car", "Car")
     Location = apps.get_model("location", "Location")
 
-    pk_max = Location.objects.all().aggregate(pk_max=Max("pk"))["pk_max"]
-    random_pk_list = sample(range(1, pk_max + 1), 1000)
-    random_locations = Location.objects.filter(pk__in=random_pk_list)[:CARS_NUMBER]
+    locations_count = Location.objects.count()
+    locations_list = Location.objects.all()
 
     cars = []
     for i in range(CARS_NUMBER):
+        random_index = randint(0, locations_count - 1)
         cars.append(
             Car(
                 unique_number=f"{1000 + i}T",
-                current_location=random_locations[i],
+                current_location=locations_list[random_index],
                 load_capacity=randint(1, 1000),
             )
         )
@@ -30,6 +30,7 @@ def prefill_cars(apps, schema_editor):
 class Migration(migrations.Migration):
     dependencies = [
         ("car", "0001_initial"),
+        ("location", "0003_import_uszips_csv"),
     ]
 
     operations = [migrations.RunPython(prefill_cars)]

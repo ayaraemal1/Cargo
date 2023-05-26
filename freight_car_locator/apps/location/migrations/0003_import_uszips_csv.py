@@ -3,7 +3,7 @@ import csv
 
 from django.db import migrations
 
-BATCH_SIZE = 10000
+BATCH_SIZE = 1000
 
 
 def load_locations(apps, schema_editor):
@@ -23,7 +23,7 @@ def load_locations(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("location", "0001_initial"),
+        ("location", "0002_remove_location_id_alter_location_zip_code"),
     ]
 
     operations = [

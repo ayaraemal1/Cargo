@@ -6,7 +6,7 @@ from .serializers import CarSerializer
 
 
 class CarViewSet(GenericViewSet, UpdateModelMixin):
-    """The viewset responsible for car data editing."""
+    """Car location updating."""
 
     queryset = Car.objects.all()
     serializer_class = CarSerializer

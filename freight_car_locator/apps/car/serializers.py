@@ -4,8 +4,6 @@ from apps.car.models import Car
 
 
 class CarSerializer(ModelSerializer):
-    current_location_zip = CharField()
-
     class Meta:
         model = Car
-        fields = ("current_location_zip",)
+        fields = ("current_location",)

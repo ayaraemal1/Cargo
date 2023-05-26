@@ -1,3 +1,4 @@
+celery[redis]==5.2.7
 Django==4.2.1
 django-health-check==3.17
 django-http-referrer-policy==1.1.1

@@ -1,19 +1,71 @@
 version: "3.9"
 
 services:
+  db:
+    restart: always
+    image: postgres:14.4-alpine
+    volumes:
+      - /pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
   backend:
     build: .
     restart: unless-stopped
     container_name: django_api
     command: bash -c "chmod +x /code/docker-entry-point.sh && /code/docker-entry-point.sh"
     ports:
-      - "8080:8080"
+      - "8000:8000"
     environment:
       - DJANGO_ENV=production
-      - DJANGO_DATABASE_HOST=172.17.0.1
+      - DJANGO_DATABASE_HOST=db
       - DJANGO_DATABASE_PORT=5432
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - DOMAIN_NAME=${DOMAIN_NAME}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+    depends_on:
+      - db
+  redis:
+    image: redis
+    container_name: redis
+    volumes:
+      - /redis-data:/data
+  celery:
+    build: .
+    restart: unless-stopped
+    container_name: celery
+    command: celery -A core worker -l info
+    environment:
+      - DJANGO_ENV=production
+      - DJANGO_DATABASE_HOST=db
+      - DJANGO_DATABASE_PORT=5432
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+    depends_on:
+      - backend
+      - redis
+  celery-beat:
+    build: .
+    restart: unless-stopped
+    container_name: celery_beat
+    command: celery -A core beat -l info
+    environment:
+      - DJANGO_ENV=production
+      - DJANGO_DATABASE_HOST=db
+      - DJANGO_DATABASE_PORT=5432
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+      - CELERY_BROKER_URL=${CELERY_BROKER_URL}
+    depends_on:
+      - backend
+      - redis

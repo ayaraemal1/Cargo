@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os.path
 from typing import Tuple
 
+from celery.schedules import crontab
 from core.settings.components import BASE_DIR, config
 
 # Quick-start development settings - unsuitable for production
@@ -167,3 +168,14 @@ REFERRER_POLICY = "same-origin"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+# Celery settings
+CELERY_BROKER_URL = config("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_CACHE_BACKEND = "default"
+CELERY_BEAT_SCHEDULE = {
+    "update_car_locations_scheduler": {
+        "task": "apps.car.tasks.update_car_locations",
+        "schedule": crontab(minute="*"),
+    },
+}

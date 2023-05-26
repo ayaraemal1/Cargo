@@ -7,18 +7,18 @@ from apps.cargo.models import Cargo
 from tests.fixtures import cargo_data
 
 CARGO_DATA = {
-    "pick_up_location_zip": 74130,
-    "delivery_location_zip": 71999,
-    "weight": Decimal(12.4),
+    "pick_up_location": "74130",
+    "delivery_location": "71999",
+    "weight": "12.4",
     "description": "parcel",
 }
 
-CARGO_UPDATE_DATA = {"weight": Decimal(150.47), "description": "parcel_updated"}
+CARGO_UPDATE_DATA = {"weight": "150.47", "description": "parcel_updated"}
 
 FILTERS_DATA = {
     "weight_from": 10,
     "weight_to": 50,
-    "nearest_cars_miles": 1000,
+    "cars_max_distance": 1000,
 }
 
 
@@ -27,7 +27,8 @@ def test_create_data(client, db):
     response = client.post(reverse("cargoes:cargo-list"), data=CARGO_DATA)
     record_id = response.json()["id"]
     record = Cargo.objects.get(id=record_id)
-    assert all(item in record.__dict__.items() for item in CARGO_DATA.items())
+    assert CARGO_DATA["pick_up_location"] == response.json()["pick_up_location"]
+    assert CARGO_DATA["pick_up_location"] == record.pick_up_location.pk
 
 
 def test_list_data(client, cargo_data):
@@ -36,26 +37,39 @@ def test_list_data(client, cargo_data):
     response_data = response.json()
     assert type(response_data) == list
     for item in response_data:
-        assert item.keys() == ("pick_up_location", "delivery_location", "nearest_cars_number")
+        assert tuple(item.keys()) == ("id", "pick_up_location", "delivery_location", "nearest_cars_number")
 
 
 def test_retrieve_data(client, cargo_data):
     """Tests the data returned by the cargo-retrieve endpoint."""
-    response = client.post(reverse("cargoes:cargo-detail", args=[1]))
+    idx = Cargo.objects.first().id
+    response = client.get(reverse("cargoes:cargo-detail", args=[idx]))
     response_data = response.json()
-    assert response_data.keys() == ("pick_up_location", "delivery_location", "weight", "description", "nearest_cars")
-    assert type(response_data["nearest_cars"]) == list
+    assert tuple(response_data.keys()) == (
+        "id",
+        "pick_up_location",
+        "delivery_location",
+        "weight",
+        "description",
+        "cars",
+    )
+    assert type(response_data["cars"]) == list
 
 
 def test_update_data(client, cargo_data):
     """Tests the data returned by the cargo-retrieve endpoint."""
-    response = client.patch(reverse("cargoes:cargo-detail", args=[5]), data=CARGO_UPDATE_DATA)
+    idx = Cargo.objects.first().id
+    response = client.patch(
+        reverse("cargoes:cargo-detail", args=[idx]), data=CARGO_UPDATE_DATA, content_type="application/json"
+    )
+    assert response.status_code == status.HTTP_200_OK
     assert response.json()["description"] == CARGO_UPDATE_DATA["description"]
 
 
 def test_delete_data(client, cargo_data):
     """Tests the data returned by the cargo-retrieve endpoint."""
     initial_count = Cargo.objects.count()
-    response = client.delete(reverse("cargoes:cargo-detail", args=[5]))
+    idx = Cargo.objects.first().id
+    response = client.delete(reverse("cargoes:cargo-detail", args=[idx]))
     assert response.status_code == status.HTTP_204_NO_CONTENT
     assert Cargo.objects.count() == initial_count - 1

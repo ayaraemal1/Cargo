@@ -3,12 +3,14 @@ import csv
 
 from django.db import migrations
 
+from core.settings.components import BASE_DIR
+
 BATCH_SIZE = 1000
 
 
 def load_locations(apps, schema_editor):
     Location = apps.get_model("location", "Location")
-    with open("apps/location/uszips.csv", "r") as csv_file:
+    with open(BASE_DIR.joinpath("apps/location/uszips.csv"), "r") as csv_file:
         reader = csv.reader(csv_file)
         next(reader)
         batch = []

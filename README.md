@@ -4,12 +4,12 @@ The Cargo management system is a Django-based web application that allows users 
 
 # Features
 
-Create, update, and delete cargos with specific characteristics, including pick-up and delivery locations, weight, and description.
-Manage cars current location.
-Define locations with details such as city, state, zip code, latitude, and longitude on the start of te app using csv table.
-Retrieve information about a specific cargo, including its pick-up and delivery locations, weight, description, and a list of all the cars numbers with their distances to the cargo.
-Filter and sort cargos based on weight and proximity to cars.
-Retrieve a list of cargos along with the count of nearby cars within a specified distance.
+- Create, update, and delete cargos with specific characteristics, including pick-up and delivery locations, weight, and description.
+- Manage cars current location.
+- Define locations with details such as city, state, zip code, latitude, and longitude on the start of te app using csv table.
+- Retrieve information about a specific cargo, including its pick-up and delivery locations, weight, description, and a list of all the cars numbers with their distances to the cargo.
+- Filter and sort cargos based on weight and proximity to cars.
+- Retrieve a list of cargos along with the count of nearby cars within a specified distance.
 
 # Installation
 

@@ -1,6 +1,6 @@
-# Cargo-management-system
+# Cargo management system
 
-The Cargo Management App is a Django-based web application that allows users to manage cargos, cars, and locations. It provides functionalities to create, update, and delete cargos, as well as retrieve information about cargos and cars based on various criteria.
+The Cargo management system is a Django-based web application that allows users to manage cargos, cars, and locations. It provides functionalities to create, update, and delete cargos, as well as retrieve information about cargos and cars based on various criteria.
 
 # Features
 

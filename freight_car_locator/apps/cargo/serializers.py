@@ -23,8 +23,6 @@ class CarDistanceSerializer(ModelSerializer):
     distance = SerializerMethodField()
 
     def get_distance(self, obj):
-        # Replace this with your logic to calculate the distance between the car and the cargo
-        # You can access the cargo object using self.context['cargo']
         cargo = self.context["cargo"]
         distance = calculate_distance(obj, cargo)  # Replace with your distance calculation method
         return distance

@@ -21,6 +21,6 @@ The Cargo management system is a Django-based web application that allows users 
 
 # API Endpoints
 
-- [Postman Documentation](https://documenter.getpostman.com/view/24517363/2s93m7WMis): Link to the documentation that provides detailed information about the API endpoints and usage.
+- [Postman Documentation](https://documenter.getpostman.com/view/24517363/2s93m7WMiw): Link to the documentation that provides detailed information about the API endpoints and usage.
 
 - [Download Postman Collection](https://raw.githubusercontent.com/air17/Cargo-management-system/master/Cargo_system.postman_collection.json): Link to download the Postman collection file that contains pre-configured requests for the API. This collection can be imported into Postman to quickly explore and test the API endpoints.

@@ -24,7 +24,7 @@ class CarDistanceSerializer(ModelSerializer):
 
     def get_distance(self, obj):
         cargo = self.context["cargo"]
-        distance = calculate_distance(obj, cargo)  # Replace with your distance calculation method
+        distance = calculate_distance(obj, cargo)
         return distance
 
     class Meta:

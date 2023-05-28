@@ -15,9 +15,9 @@ The Cargo management system is a Django-based web application that allows users 
 
 1. Clone the repository: `git clone https://github.com/air17/Cargo-management-system.git`
 2. Navigate to the project's directory: `cd Cargo-management-system`
-3. Rename `.env.template` file to `.env` and fill it in.
-4. Run `docker compose up -d`
-5. It's available at http://localhost:8000
+3. Copy `.env.template` file to `.env` and fill it in.
+4. Start the application using Docker Compose: `docker compose up -d`
+5. Access the application through your web browser at http://localhost:8000.
 
 # API Endpoints
 

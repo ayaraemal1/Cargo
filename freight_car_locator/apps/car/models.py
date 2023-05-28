@@ -5,7 +5,16 @@ from apps.location.models import Location
 
 
 class Car(models.Model):
-    """Stores car information"""
+    """
+    A class representing a car.
+
+    Attributes:
+        unique_number (str): The unique number of the car in the format "1234A", "2534B", etc.
+        current_location (Location): The current location of the car.
+        load_capacity (Decimal): The load capacity of the car.
+        created (datetime): The datetime when the car data was created.
+        updated (datetime): The datetime when the car data was last updated.
+    """
 
     unique_number = models.CharField(
         max_length=5,

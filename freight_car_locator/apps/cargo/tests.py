@@ -23,7 +23,7 @@ FILTERS_DATA = {
 
 
 def test_create_data(client, db):
-    """Tests the data returned by the cargo-create endpoint."""
+    """Tests the data returned and created by the cargo-create endpoint."""
     response = client.post(reverse("cargoes:cargo-list"), data=CARGO_DATA)
     record_id = response.json()["id"]
     record = Cargo.objects.get(id=record_id)
@@ -57,7 +57,7 @@ def test_retrieve_data(client, cargo_data):
 
 
 def test_update_data(client, cargo_data):
-    """Tests the data returned by the cargo-retrieve endpoint."""
+    """Tests the data returned by the cargo-update endpoint."""
     idx = Cargo.objects.first().id
     response = client.patch(
         reverse("cargoes:cargo-detail", args=[idx]), data=CARGO_UPDATE_DATA, content_type="application/json"
@@ -67,7 +67,7 @@ def test_update_data(client, cargo_data):
 
 
 def test_delete_data(client, cargo_data):
-    """Tests the data returned by the cargo-retrieve endpoint."""
+    """Tests the cargo-delete endpoint."""
     initial_count = Cargo.objects.count()
     idx = Cargo.objects.first().id
     response = client.delete(reverse("cargoes:cargo-detail", args=[idx]))

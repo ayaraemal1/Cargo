@@ -9,6 +9,7 @@ BATCH_SIZE = 1000
 
 
 def load_locations(apps, schema_editor):
+    """Load locations from a CSV file into the database."""
     Location = apps.get_model("location", "Location")
     with open(BASE_DIR.joinpath("apps/location/uszips.csv"), "r") as csv_file:
         reader = csv.reader(csv_file)

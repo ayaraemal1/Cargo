@@ -5,7 +5,17 @@ from apps.location.models import Location
 
 
 class Cargo(models.Model):
-    """Stores cargo information"""
+    """
+    A class representing cargo.
+
+    Attributes:
+        pick_up_location (Location): The pick-up location of the cargo.
+        delivery_location (Location): The delivery location of the cargo.
+        weight (Decimal): The weight of the cargo.
+        description (str): The description of the cargo.
+        created (datetime): The datetime when the cargo was created.
+        updated (datetime): The datetime when the cargo was last updated.
+    """
 
     pick_up_location = models.ForeignKey(Location, related_name="pick_up_cargos", on_delete=models.CASCADE)
     delivery_location = models.ForeignKey(Location, related_name="delivery_cargos", on_delete=models.CASCADE)

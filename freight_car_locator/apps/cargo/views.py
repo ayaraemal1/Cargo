@@ -9,13 +9,19 @@ from .serializers import CargoCreateSerializer, CargoDetailSerializer, CargoEdit
 
 
 class CargoViewSet(ModelViewSet):
-    """Cargo data manipulations (create, list, retrieve, update, delete methods)"""
+    """
+    A view set for the Cargo model.
 
-    DEFAULT_MAX_DISTANCE = 450
+    Provides CRUD functionality for Cargo instances.
+
+    Attributes:
+        queryset (QuerySet): The queryset of all Cargo instances.
+    """
 
     queryset = Cargo.objects.select_related("pick_up_location").all()
 
     def get_serializer_class(self):
+        """Returns the appropriate serializer class based on the action."""
         if self.action == "retrieve":
             return CargoDetailSerializer
         elif self.action == "update":
@@ -26,7 +32,8 @@ class CargoViewSet(ModelViewSet):
             return CargoCreateSerializer
 
     def list(self, request, *args, **kwargs):
-        """Adding filters to list method"""
+        """Retrieves a list of Cargo instances with optional filters."""
+        DEFAULT_MAX_DISTANCE = 450
         queryset = self.queryset
         weight_from = request.query_params.get("weight_from")
         weight_to = request.query_params.get("weight_to")
@@ -39,7 +46,7 @@ class CargoViewSet(ModelViewSet):
             if cars_max_distance:
                 cars_max_distance = float(cars_max_distance)
             else:
-                cars_max_distance = self.DEFAULT_MAX_DISTANCE
+                cars_max_distance = DEFAULT_MAX_DISTANCE
         except (InvalidOperation, ValueError):
             raise ValidationError("Filter parameter must be a number.")
 

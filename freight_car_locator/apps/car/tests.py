@@ -14,7 +14,7 @@ def test_update_status_code(client, db):
 
 
 def test_update_data(client, db):
-    """Tests the data returned by the car-update endpoint for different clients."""
+    """Tests the data returned by the car-update endpoint."""
     response = client.patch(
         reverse("cars:car-detail", args=[1]), data=UPDATE_LOCATION_DATA, content_type="application/json"
     )

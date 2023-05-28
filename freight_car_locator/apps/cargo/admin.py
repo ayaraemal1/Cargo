@@ -4,6 +4,8 @@ from .models import Cargo
 
 
 class CargoAdmin(admin.ModelAdmin):
+    """Admin panel settings for Cargo model"""
+
     model = Cargo
     date_hierarchy = "updated"
     ordering = ("-updated",)

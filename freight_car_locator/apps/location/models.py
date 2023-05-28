@@ -2,7 +2,18 @@ from django.db import models
 
 
 class Location(models.Model):
-    """Stores possible cargo and cars locations"""
+    """
+    A class representing a location.
+
+    Attributes:
+        city (str): The city of the location.
+        state (str): The state of the location.
+        zip_code (str): The postal code of the location (primary key).
+        latitude (float): The latitude coordinate of the location.
+        longitude (float): The longitude coordinate of the location.
+        created (datetime): The datetime when the location was created.
+        updated (datetime): The datetime when the location was last updated.
+    """
 
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)

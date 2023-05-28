@@ -10,6 +10,15 @@ BATCH_SIZE = 1000
 
 @shared_task
 def update_car_locations():
+    """
+    Background task to update the current locations of cars.
+
+    Retrieves all cars and locations from the database and updates the current location of each car
+    with a randomly selected location. Performs bulk updates in batches for efficiency.
+
+    Note:
+        This task is designed to be executed by a task queue system like Celery.
+    """
     cars = Car.objects.all()
     locations_list = Location.objects.all()
     locations_count = Location.objects.count()

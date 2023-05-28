@@ -4,6 +4,8 @@ from .models import Location
 
 
 class LocationAdmin(admin.ModelAdmin):
+    """Admin panel settings for Location model"""
+
     model = Location
     date_hierarchy = "updated"
     ordering = ("-updated",)
